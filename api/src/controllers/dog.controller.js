@@ -1,30 +1,35 @@
 const { Dog } = require("../db.js");
 const axios = require("axios");
-const { Op } = require("sequelize"); //por si uso
-const router = require("../routes"); /// las rutas del index
+const { Op } = require("sequelize");
+const router = require("../routes");
 const db = require("../db.js");
-const { restart } = require("nodemon");
+const { MY_APPI_KEY } = process.env;
 require("dotenv").config();
 
-//CORREGIR EL TEMA DEL LLAMADO A LA API
+//función que consulta a la API y trae la info
+const getInfo = async () => {
+  const apiRes = await axios.get(
+    `https://api.thedogapi.com/v1/breeds/?api_key=${MY_APPI_KEY}` //apiKey
+  );
+  const apiInfo = apiRes.data;
+  return apiInfo;
+};
+
 const apiDog = async (req, res) => {
   try {
-    //llamado a la API DEBE IR DENTRO DEL IF!! ==========>OJOO<==============
-    const apiRes = await axios.get("https://api.thedogapi.com/v1/breeds");
-    const apiInfo = apiRes.data;
-
-    var dbContent = await Dog.findAll();
+    let dbContent = await Dog.findAll();
     //id, name, height, weight, lifeSpan
-    let info = apiInfo.map((el) => {
-      return {
-        id: el.id,
-        name: el.name,
-        height: el.height.imperial,
-        weight: el.weight.imperial,
-        lifeSpan: el.life_span,
-      };
-    });
     if (dbContent.length === 0) {
+      let apiInfo = await getInfo();
+      let info = apiInfo.map((el) => {
+        return {
+          id: el.id,
+          name: el.name,
+          height: el.height.imperial,
+          weight: el.weight.imperial,
+          lifeSpan: el.life_span,
+        };
+      });
       for (let i = 0; i < info.length; i++) {
         const { id, name, height, weight, lifeSpan } = info[i];
         Dog.bulkCreate([
@@ -44,33 +49,70 @@ const apiDog = async (req, res) => {
     res.status(500).json({ msg: error });
   }
 };
-/* 
-const data = async (req, res) => {
-  const doggyData = await Dog.findAll();
-  res.status(200).json(doggyData);
-};
- */
+
 const apiNames = async (req, res) => {
-  const responseApi = await axios.get("https://api.thedogapi.com/v1/breeds");
-  try {
-    const dogQuery = responseApi.data.filter((p) =>
-      p.name.toLowerCase().includes(req.query.name.toLowerCase())
-    );
-    return res.status(200).json(dogQuery);
-  } catch (error) {
-    return res.status(404).json({ message: error });
+  let infoApi = await getInfo();
+  let info = infoApi.map((el) => {
+    return {
+      id: el.id,
+      name: el.name,
+      height: el.height.imperial,
+      weight: el.weight.imperial,
+      lifeSpan: el.life_span,
+    };
+  });
+  const DogMatch = info.filter((p) =>
+    p.name.toLowerCase().includes(req.query.name.toLowerCase())
+  );
+  if (DogMatch.length === 0) {
+    return res.status(404).json({ message: "Dog not found" });
+  } else {
+    return res.status(200).json(DogMatch);
   }
 };
 
 const getid = async (req, res) => {
-  const responseApi = await axios.get("https://api.thedogapi.com/v1/breeds");
   try {
-    const dogRaza = responseApi.data.find((p) => {
-      p.id === req.params.id;
-    }); //req.param
-    console.log(dogRaza);
+    let dbContent = await Dog.findAll();
+    const IdDog = req.params.id;
+    if (dbContent.length === 0) {
+      let apiInfo = await getInfo();
+      let info = apiInfo.map((el) => {
+        return {
+          id: el.id,
+          name: el.name,
+          height: el.height.imperial,
+          weight: el.weight.imperial,
+          lifeSpan: el.life_span,
+        };
+      });
+      for (let i = 0; i < info.length; i++) {
+        const { id, name, height, weight, lifeSpan } = info[i];
+        await Dog.bulkCreate([
+          {
+            id,
+            name,
+            height,
+            weight,
+            lifeSpan,
+          },
+        ]);
+      }
+      let dogMatch = await Dog.findByPk(IdDog);
+      if (!dogMatch) return res.status(404).json({ message: "dog not found" });
+      else {
+        return res.status(202).json(dogMatch);
+      }
+    } else {
+      let dogMatch = await Dog.findByPk(IdDog);
+      if (!dogMatch) {
+        return res.status(404).json({ message: "dog not found" });
+      } else {
+        return res.status(200).json(dogMatch);
+      }
+    }
   } catch (error) {
-    return res.status(404).json({ message: error });
+    res.status(500).json({ message: "Something was wrong" });
   }
 };
 

@@ -8,8 +8,8 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.INTEGER,
+        DefaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
       },
       name: {
         type: DataTypes.STRING,
@@ -26,6 +26,10 @@ module.exports = (sequelize) => {
       lifeSpan: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      from: {
+        type: DataTypes.STRING,
+        defaultValue: "API",
       },
     },
 
