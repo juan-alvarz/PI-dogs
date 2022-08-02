@@ -46,7 +46,7 @@ const apiDog = async (req, res) => {
     }
     res.status(202).json(dbContent);
   } catch (error) {
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: error.message });
   }
 };
 
