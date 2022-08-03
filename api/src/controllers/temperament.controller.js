@@ -1,7 +1,6 @@
 const { Temperamento } = require("../db.js");
 const axios = require("axios");
 const { MY_APPI_KEY } = process.env;
-// const {Op} = require('sequelize');
 require("dotenv").config();
 
 const temperamento = async (req, res) => {

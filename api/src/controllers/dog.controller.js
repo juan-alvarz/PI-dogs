@@ -1,6 +1,6 @@
 const { Dog } = require("../db.js");
 const axios = require("axios");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const router = require("../routes");
 const db = require("../db.js");
 const e = require("express");
@@ -24,7 +24,6 @@ const apiDog = async (req, res) => {
       let apiInfo = await getInfo();
       let info = apiInfo.map((el) => {
         return {
-          id: el.id,
           name: el.name,
           height: el.height.metric,
           weight: el.weight.metric,
@@ -35,7 +34,7 @@ const apiDog = async (req, res) => {
       });
       for (let i = 0; i < info.length; i++) {
         const { name, height, weight, lifeSpan, temperament, image } = info[i];
-        Dog.bulkCreate([
+        await Dog.bulkCreate([
           {
             name,
             height,
@@ -69,12 +68,12 @@ const createNewDog = async (req, res) => {
     weight,
     lifeSpan,
     temperament,
-    from: "DB",
+    created: "DB",
   });
   return res.status(200).json(
     await Dog.findAll({
       where: {
-        from: "DB",
+        created: "DB",
       },
     })
   );
@@ -82,27 +81,59 @@ const createNewDog = async (req, res) => {
 
 const apiNames = async (req, res) => {
   try {
-    let infoApi = await getInfo();
-    let info = infoApi.map((el) => {
-      return {
-        id: el.id,
-        name: el.name,
-        height: el.height.imperial,
-        weight: el.weight.imperial,
-        lifeSpan: el.life_span,
-        temperament: el.temperament,
-      };
-    });
-    const DogMatch = info.filter((p) =>
-      p.name.toLowerCase().includes(req.query.name.toLowerCase())
-    );
-    if (DogMatch.length === 0) {
-      return res.status(404).json({ message: "Dog not found" });
+    let dogName = req.query.name;
+    let dbContent = await Dog.findAll();
+    if (dbContent.length === 0) {
+      let apiInfo = await getInfo();
+      let info = apiInfo.map((el) => {
+        return {
+          name: el.name,
+          height: el.height.metric,
+          weight: el.weight.metric,
+          lifeSpan: el.life_span,
+          temperament: el.temperament,
+          image: el.image.url,
+        };
+      });
+      for (let i = 0; i < info.length; i++) {
+        const { name, height, weight, lifeSpan, temperament, image } = info[i];
+        await Dog.bulkCreate([
+          {
+            name,
+            height,
+            weight,
+            lifeSpan,
+            temperament,
+            image,
+          },
+        ]);
+      }
+      let dogMatched = await Dog.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${dogName}%`,
+          },
+        },
+      });
+      if (dogMatched.length === 0) {
+        return res.status(404).json({ message: "Dog not found :(" });
+      }
+      return res.status(200).json(dogMatched);
     } else {
-      return res.status(200).json(DogMatch);
+      let dogMatched = await Dog.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${dogName}%`,
+          },
+        },
+      });
+      if (dogMatched.length === 0) {
+        return res.status(404).json({ message: "Dog not found :(" });
+      }
+      return res.status(200).json(dogMatched);
     }
   } catch (error) {
-    return res.status(500).json({ msg: error.message });
+    return res.status(400).json({ message: "something was wrong :c" });
   }
 };
 

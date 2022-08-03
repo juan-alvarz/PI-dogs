@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
       image: {
         type: DataTypes.STRING,
       },
-      from: {
+      created: {
         type: DataTypes.STRING,
         defaultValue: "API",
       },
