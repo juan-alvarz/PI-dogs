@@ -14,7 +14,7 @@ const temperamento = async (req, res) => {
       const apiInfo = apiRes.data;
       let temp = apiInfo.map((el) => {
         if (el.temperament) {
-          return el.temperament.split(", ");
+          return el.temperament.split(", "); // Null
         }
       });
       temp = temp.flat();

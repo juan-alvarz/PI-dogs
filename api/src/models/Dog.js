@@ -8,7 +8,8 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.INTEGER,
-        DefaultValue: DataTypes.UUIDV4,
+        //DefaultValue: DataTypes.UUIDV4,
+        autoIncrement: true,
         primaryKey: true,
       },
       name: {
@@ -27,12 +28,18 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      temperament: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      image: {
+        type: DataTypes.STRING,
+      },
       from: {
         type: DataTypes.STRING,
         defaultValue: "API",
       },
     },
-
     { timestamps: true, createdAt: "creado", updatedAt: false }
   );
 };
