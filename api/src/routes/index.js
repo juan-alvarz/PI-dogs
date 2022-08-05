@@ -9,8 +9,5 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/", dogs);
 router.use("/temp", temperament);
-router.get("/", () => {
-  console.log("ruta principal");
-});
 
 module.exports = router;
