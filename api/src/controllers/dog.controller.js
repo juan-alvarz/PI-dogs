@@ -24,7 +24,7 @@ const getInfo = async () => {
     };
   });
 };
-
+//lama la API y crea una variable global
 getInfo();
 
 const apiDog = async (req, res) => {
@@ -68,7 +68,8 @@ const apiNames = async (req, res) => {
     let dogMatched = content.filter((p) =>
       p.name.toLowerCase().includes(dogName.toLowerCase())
     );
-    if (dogMatched.length === 0)
+    let dogMatchedLength = Object.keys(dogMatched).length;
+    if (dogMatchedLength === 0)
       return res.status(404).json({ message: "Dog not found :(" });
     return res.status(200).json(dogMatched);
   } catch (error) {
@@ -78,9 +79,9 @@ const apiNames = async (req, res) => {
 
 const getId = async (req, res) => {
   try {
-    console.log(dbContenido);
     let content = dbContenido;
     let dogMatch = content.find((p) => p.id.toString() === req.params.id);
+    if (!dogMatch) return res.status(404).json({ message: "dog not found" });
     return res.status(200).json(dogMatch);
   } catch (error) {
     return res.status(500).json({ message: error.message });
