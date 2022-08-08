@@ -4,7 +4,11 @@ import {
   getDogs,
   getTemperaments,
   filterDogsByTemperament,
+  filterCreated,
+  sortByName,
+  sortByWeight,
 } from "../../redux/actions";
+import SearchBar from "../SearchBar";
 import { Link } from "react-router-dom";
 import DogCard from "../Card";
 import Paginado from "../Paginado";
@@ -15,26 +19,47 @@ export default function Home() {
 
   const allDogs = useSelector((state) => state.dogs);
   const [currentPage, setCurrentPage] = useState(1);
-  //cuantos perros por pagina
 
+  //cuantos perros por pagina
   const [dogsPage, setDogsPage] = useState(8);
   const indexOfLastDog = currentPage * dogsPage; // 7
   const indexOfFirstDog = indexOfLastDog - dogsPage;
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
+  const [order, setOrder] = useState("");
 
-  const next = (state) => {
-    if (state <= 21) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-  const prev = (state) => {
-    if (state >= 2) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const paginado = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  //define todas las funciones necesarias en un objeto
+  const utils = {
+    next: (state) => {
+      if (state <= 21) {
+        setCurrentPage(state + 1);
+      }
+    },
+    prev: (state) => {
+      if (state >= 2) {
+        setCurrentPage(state - 1);
+      }
+    },
+    paginado: (pageNumber) => {
+      setCurrentPage(pageNumber);
+    },
+    handleClick: (e) => {
+      e.preventDefault();
+      dispatch(getDogs());
+    },
+    handleSortAlpha(e) {
+      e.preventDefault();
+      dispatch(sortByName(e.target.value));
+      setCurrentPage(1);
+      setOrder(`${e.target.value}`);
+    },
+    handleSortWeight(e) {
+      e.preventDefault();
+      if (e.target.value !== "all") {
+        dispatch(sortByWeight(e.target.value));
+      }
+      setCurrentPage(1);
+      setOrder(`${e.target.value}`);
+    },
   };
 
   useEffect(() => {
@@ -45,22 +70,33 @@ export default function Home() {
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  function handleClick(e) {
-    e.preventDefault();
-    dispatch(getDogs());
+  function handleFilterCreated(e) {
+    dispatch(filterCreated(e.target.value));
   }
 
   function handleFilterStatus(e) {
     dispatch(filterDogsByTemperament(e.target.value));
   }
 
+  /*  function hanldeSortAlpha(e) {
+    e.preventDefault();
+    dispatch(sortByName(e.target.value));
+    setCurrentPage(1);
+    setOrder(
+      `Ordenado alfabéticamente ${
+        e.target.value === "asc" ? "Ascendente" : "Descendente"
+      }`
+    );
+  } */
+
   return (
     <div>
       <h2>DoggyApp</h2>
-      <Link to="/home">crear perro</Link>
+      <Link to="/createDog">crear perro</Link>
+      <SearchBar />
       <button
         onClick={(e) => {
-          handleClick(e);
+          utils.handleClick(e);
         }}
       >
         Recargar
@@ -75,36 +111,52 @@ export default function Home() {
               </option>
             );
           })}
-          <option value="temps">array de temperamentos..</option>
         </select>
+
+        <select onChange={(e) => utils.handleSortAlpha(e)}>
+          <option value="asc">A-Z</option>
+          <option value="desc">Z-A</option>
+        </select>
+        {/*================================================= SEGUIR ACA EL CODIGO ========================================================= */}
         <select>
+          <option value="all">all</option>
+          <option value="min">min weight</option>
+          <option value="max">max weight</option>
+        </select>
+        {/* <select>
           <option value="todos">Todos</option>
           <option value="alpha">A-Z</option>
           <option value="weight">Weight</option>
-        </select>
-        <select>
-          <option value="todos">Todos</option>
-          <option value="existent">api</option>
-          <option value="created">db</option>
+        </select> */}
+        <select onChange={(e) => handleFilterCreated(e)}>
+          <option value="todos">all</option>
+          <option value="existent">existentes</option>
+          <option value="created">creados</option>
         </select>
         <p>Current Page: {currentPage}</p>
         <div>
-          <button onClick={() => prev(currentPage)}>{"<-"}Prev</button>
+          <button onClick={() => utils.prev(currentPage, setCurrentPage)}>
+            {"<-"}Prev
+          </button>
           <Paginado
             dogsPage={dogsPage}
             allDogs={allDogs.length}
-            paginado={paginado}
+            paginado={utils.paginado}
           />
-          <button onClick={() => next(currentPage)}>Next{"->"}</button>
+          <button onClick={() => utils.next(currentPage)}>Next{"->"}</button>
         </div>
+        {/* magen
+Nombre
+Temperamento
+Peso */}
         {currentDogs?.map((p) => {
           return (
             <DogCard
               key={p.id}
               name={p.name}
               image={p.image}
+              temperament={p.temperament}
               weight={p.weight}
-              lifeSpan={p.lifeSpan}
             />
           );
         })}
