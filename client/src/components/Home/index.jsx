@@ -44,6 +44,7 @@ export default function Home() {
     },
     handleClick: (e) => {
       e.preventDefault();
+      setCurrentPage(1);
       dispatch(getDogs());
     },
     handleSortAlpha(e) {
@@ -74,10 +75,9 @@ export default function Home() {
     dispatch(filterCreated(e.target.value));
   }
 
-  function handleFilterStatus(e) {
+  function handleFilterTemperament(e) {
     dispatch(filterDogsByTemperament(e.target.value));
   }
-
   /*  function hanldeSortAlpha(e) {
     e.preventDefault();
     dispatch(sortByName(e.target.value));
@@ -99,11 +99,13 @@ export default function Home() {
           utils.handleClick(e);
         }}
       >
-        Recargar
+        Reload
       </button>
       <div>
-        <select onChange={(e) => handleFilterStatus(e)}>
+        {/* temperamentos: */}
+        <select onChange={(e) => handleFilterTemperament(e)}>
           <option value="temp">Temperament</option>
+
           {allTemperaments?.map((t) => {
             return (
               <option value={`${t.name}`} key={t.id}>
@@ -117,17 +119,11 @@ export default function Home() {
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
         </select>
-        {/*================================================= SEGUIR ACA EL CODIGO ========================================================= */}
-        <select>
+        <select onChange={(e) => utils.handleSortWeight(e)}>
           <option value="all">all</option>
           <option value="min">min weight</option>
           <option value="max">max weight</option>
         </select>
-        {/* <select>
-          <option value="todos">Todos</option>
-          <option value="alpha">A-Z</option>
-          <option value="weight">Weight</option>
-        </select> */}
         <select onChange={(e) => handleFilterCreated(e)}>
           <option value="todos">all</option>
           <option value="existent">existentes</option>

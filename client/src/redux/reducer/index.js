@@ -1,4 +1,5 @@
 import {
+  filterDogsByTemperament,
   FILTERS_BY_TEMPERAMENT,
   FILTER_BY_TEMPERAMENT,
   FILTER_CREATED,
@@ -34,8 +35,8 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_DOG_BY_NAME:
-      console.log(action.payload);
-      console.log(Array.isArray(action.payload));
+      /*  console.log(action.payload);
+      console.log(Array.isArray(action.payload)); */
       if (Array.isArray(action.payload)) {
         return {
           ...state,
@@ -53,21 +54,28 @@ function rootReducer(state = initialState, action) {
       };
 
     case FILTER_BY_TEMPERAMENT:
-      const allDogs = state.allDogs; // temperaments => undefined || temperament => null
+      const allDogs = state.allDogs;
+
       let dogsTemp = allDogs.map((p) => {
         if (p.temperament) return p;
       });
-      //pasa de los perros con temperamento indefinido
       dogsTemp = dogsTemp.filter((p) => p !== undefined);
+      //pasa de los perros con temperamento indefinido
       const statusFilter =
         action.payload === "temp"
           ? allDogs
           : dogsTemp.filter((p) => p.temperament.includes(action.payload));
+      // poke.filter(p => p.types[0] === action.payload || p.types[1] === action.payload)
+      // poke.filter(p => p.types.join(', ').includes(action.payload))
+      //
       return {
         ...state,
         dogs: statusFilter, //el state de los perros de vuelve UNICAMENTE los filtrados
       };
-
+    case "POST_DOG":
+      return {
+        ...state,
+      };
     case FILTER_CREATED:
       const allDoggys = state.allDogs;
       const filterCreated =
@@ -116,9 +124,9 @@ function rootReducer(state = initialState, action) {
               return 0;
             })
           : dataDogs.sort(function (a, b) {
-              if (a.weight.split(" - ")[1] > b.weight.split(" - ")[1]) return 1;
-              if (b.weight.split(" - ")[1] > a.weight.split(" - ")[1])
-                return -1;
+              if (a.weight.split(" - ")[1] > b.weight.split(" - ")[1])
+                return -1; // '15 - 54' [15,54]
+              if (b.weight.split(" - ")[1] > a.weight.split(" - ")[1]) return 1;
               return 0;
             });
       return {

@@ -1,4 +1,5 @@
 import { createDispatchHook } from "react-redux";
+import axios from "axios";
 
 export const GET_DOGS = "GET_DOGS";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
@@ -16,6 +17,13 @@ export const getDogs = () => (dispatch) => {
     .then((data) => dispatch({ type: GET_DOGS, payload: data }));
 };
 
+export function createDog(payload) {
+  return async function (dispatch) {
+    const resApi = axios.post("http://localhost:3001/dogs", payload);
+    return resApi;
+  };
+}
+
 export const getTemperaments = () => (dispatch) => {
   return fetch("http://localhost:3001/temp")
     .then((r) => r.json())
@@ -29,13 +37,13 @@ export function filterDogsByTemperament(payload) {
   };
 }
 
-export function filtersByTemperament(payload) {
+/* export function filtersByTemperament(payload) {
   return {
     type: FILTERS_BY_TEMPERAMENT,
     payload,
   };
 }
-
+ */
 export function filterCreated(payload) {
   return {
     type: FILTER_CREATED,

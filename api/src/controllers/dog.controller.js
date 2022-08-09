@@ -30,9 +30,10 @@ getInfo();
 const apiDog = async (req, res) => {
   try {
     let content = dbContenido;
+    //DEBUGGEAR ================================================================
     let we = content.map((p) => p.weight.split(" - "));
-
-    console.log(we);
+    console.log(we.length);
+    //=========================================================================
 
     return res.status(202).json(content);
   } catch (error) {
