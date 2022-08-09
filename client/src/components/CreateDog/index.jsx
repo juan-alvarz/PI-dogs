@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { createDog, getTemperaments } from "../../redux/actions";
+import {
+  createDog,
+  createNewBreed,
+  getTemperaments,
+} from "../../redux/actions";
 
 /* function validate(input) {
   let errors = {};
@@ -33,11 +37,11 @@ Años de vida */
   });
   const sendToPost = {
     name: input.name,
-    image: input.image,
+    image: "https://cdn-icons-png.flaticon.com/512/64/64435.png",
     height: `${input.min_height} - ${input.max_height}`,
     weight: `${input.min_weight} - ${input.max_weight}`,
-    lifeSpan: `${input.min_lifeSpan} - ${input.max_lifeSpan}`,
-    temperaments: input.temperaments,
+    lifeSpan: `${input.min_lifeSpan} - ${input.max_lifeSpan} yea`,
+    temperaments: input.temperaments.join(", "),
   };
 
   useEffect(() => {
@@ -56,12 +60,15 @@ Años de vida */
       ...input,
       temperaments: [...input.temperaments, e.target.value],
     });
-    console.log(input);
+    //console.log(input);
+    //console.log(sendToPost);
   }
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(input);
-    dispatch(createDog(sendToPost));
+    console.log(sendToPost);
+    /*     dispatch(createDog(sendToPost)); */
+    createNewBreed(sendToPost);
+    //dispatch(createNewBreed(sendToPost));
     alert("breed created succesfully");
     setInput({
       name: "",

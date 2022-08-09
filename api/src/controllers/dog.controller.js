@@ -30,11 +30,6 @@ getInfo();
 const apiDog = async (req, res) => {
   try {
     let content = dbContenido;
-    //DEBUGGEAR ================================================================
-    let we = content.map((p) => p.weight.split(" - "));
-    console.log(we.length);
-    //=========================================================================
-
     return res.status(202).json(content);
   } catch (error) {
     return res.status(500).json({ msg: error.message });
@@ -44,7 +39,7 @@ const apiDog = async (req, res) => {
 const createNewDog = async (req, res) => {
   try {
     // temperamento, image, pe
-    const { name, height, weight, lifeSpan, temperament } = req.body;
+    const { name, height, weight, lifeSpan, temperament, image } = req.body;
     /*- Crea una raza de perro en la base de datos relacionada con sus temperamentos */
     if (!name || !weight || !temperament)
       return res.status(400).json({ message: "information required!" });
@@ -53,15 +48,21 @@ const createNewDog = async (req, res) => {
       height,
       weight,
       lifeSpan,
+      image,
       temperament,
     });
     let dbDog = await Dog.findAll(); // {} => longitud === 0
     let dbDogLength = Object.keys(dbDog).length;
     if (dbDogLength !== 0) {
+      let hash = {};
       dbContenido = dbContenido.concat(dbDog);
+      dbContenido = dbContenido.filter((p) =>
+        hash[p.id] ? false : (hash[p.id] = true)
+      );
     }
     return res.status(200).send("perro creado con exito");
   } catch (error) {
+    console.log(error.message);
     return res.status(500).json({ message: error.message });
   }
 };

@@ -1,4 +1,4 @@
-let users = [
+/* let users = [
   {
     name: "Juan",
     age: "21 - 45",
@@ -32,3 +32,22 @@ let usersSortMax = users.sort((a, b) => {
 
 console.log(usersSortMin);
 console.log(usersSortMax);
+ */
+
+const axios = require("axios");
+
+async function crearPerro(payload) {
+  await axios.post("http://localhost:3001/dogs", payload);
+  console.log(payload);
+}
+
+let perro = {
+  name: "Scooby-Doo",
+  height: "10 - 67",
+  weight: "10-34",
+  lifeSpan: "23-55",
+  temperament: "Happy, Playful, Gay",
+};
+
+crearPerro(perro);
+// client/src/components/pruebas/test.js

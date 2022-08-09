@@ -17,9 +17,14 @@ export const getDogs = () => (dispatch) => {
     .then((data) => dispatch({ type: GET_DOGS, payload: data }));
 };
 
+export async function createNewBreed(payload) {
+  let newBreed = await axios.post("http://localhost:3001/dogs", payload);
+  return newBreed;
+}
+
 export function createDog(payload) {
   return async function (dispatch) {
-    const resApi = axios.post("http://localhost:3001/dogs", payload);
+    const resApi = await axios.post("http://localhost:3001/dogs", payload);
     return resApi;
   };
 }
