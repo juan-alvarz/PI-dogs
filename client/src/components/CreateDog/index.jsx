@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   createDog,
@@ -8,17 +7,39 @@ import {
   getTemperaments,
 } from "../../redux/actions";
 
-/* function validate(input) {
-  let errors = {};
-  if (input.name) {
-    error.name = "Se requiere nombre";
-  }
-} */
+//  IMAGEN DEFAULT DE PERRO
+const image_dog_default = require("../../images/default-dog.png");
 
+// --------------------- VALIDACIONES --------------------------
+/* 
+    name: "",
+    image: "",
+    max_height: "1",
+    min_height: "1",
+    min_weight: "1",
+    max_weight: "1",
+    min_lifeSpan: "1",
+    max_lifeSpan: 1,
+    temperaments: [], */
+function validate(input) {
+  let errors = {};
+  if (!input.name) {
+    errors.name = "name is required";
+  } else if (input.max_height < input.min_height)
+    errors.max_height = "max height must be greater than min height";
+  else if (input.max_weight < input.min_weight)
+    errors.max_weight = "max weight must be greater than min weight";
+  else if (input.max_lifeSpan < input.min_lifeSpan)
+    errors.max_lifeSpan = "max life span must be greater than min life span";
+
+  return errors;
+}
+//---------------------------------------------------------------------------
 export default function CreateDog() {
   const dispatch = useDispatch();
   const history = useHistory();
   const temperaments = useSelector((state) => state.temperaments);
+  const [errors, setErrors] = useState({});
 
   /* Nombre
 Altura (Diferenciar entre altura mínima y máxima)
@@ -37,11 +58,14 @@ Años de vida */
   });
   const sendToPost = {
     name: input.name,
-    image: "https://cdn-icons-png.flaticon.com/512/64/64435.png",
+    image:
+      input.image === ""
+        ? "https://static.vecteezy.com/system/resources/thumbnails/006/720/668/small/dog-face-logo-free-vector.jpg"
+        : input.image,
     height: `${input.min_height} - ${input.max_height}`,
     weight: `${input.min_weight} - ${input.max_weight}`,
     lifeSpan: `${input.min_lifeSpan} - ${input.max_lifeSpan} yea`,
-    temperaments: input.temperaments.join(", "),
+    temperament: input.temperaments.join(", "),
   };
 
   useEffect(() => {
@@ -53,22 +77,28 @@ Años de vida */
       ...input,
       [e.target.name]: e.target.value,
     });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
     console.log(input);
   }
   function handleTemperament(e) {
-    setInput({
-      ...input,
-      temperaments: [...input.temperaments, e.target.value],
-    });
+    if (e.target.value !== "temp") {
+      setInput({
+        ...input,
+        temperaments: [...input.temperaments, e.target.value],
+      });
+    }
     //console.log(input);
     //console.log(sendToPost);
   }
   function handleSubmit(e) {
     e.preventDefault();
     console.log(sendToPost);
-    /*     dispatch(createDog(sendToPost)); */
     createNewBreed(sendToPost);
-    //dispatch(createNewBreed(sendToPost));
     alert("breed created succesfully");
     setInput({
       name: "",
@@ -83,11 +113,17 @@ Años de vida */
     });
     history.push("/home");
   }
+  function handleDeleteTemp(el) {
+    setInput({
+      ...input,
+      temperaments: input.temperaments.filter((te) => te !== el),
+    });
+  }
 
   return (
     <div>
       <Link to="/home">
-        <button>Home</button>
+        <img src={image_dog_default} alt="" />
       </Link>
       <h1>Create a new breed</h1>
       <form onSubmit={handleSubmit}>
@@ -100,6 +136,7 @@ Años de vida */
             autoComplete="off"
             onChange={handleChange}
           />
+          {errors.name && <p className="error">{errors.name}</p>}
         </div>
         <div>
           <input
@@ -110,6 +147,13 @@ Años de vida */
             autoComplete="off"
             onChange={handleChange}
           />
+          {input.image === "" ? (
+            <p className="warning">
+              if you dont put image, the app set an image by default
+            </p>
+          ) : (
+            ""
+          )}
         </div>
         <div>
           <label>Min Height: </label>
@@ -123,11 +167,13 @@ Años de vida */
           <label>Max Height: </label>
           <input
             type="number"
+            size="10"
             min={(Number(input.min_height) + 1).toString()}
             value={input.max_height}
             name="max_height"
             onChange={handleChange}
           />
+          {errors.max_height && <p className="error">{errors.max_height}</p>}
         </div>
         <div>
           <label>Min Weight:</label>
@@ -147,6 +193,7 @@ Años de vida */
             name="max_weight"
             onChange={handleChange}
           />
+          {errors.max_weight && <p className="error">{errors.max_weight}</p>}
         </div>
         <div>
           <label>Min life span: </label>
@@ -165,6 +212,9 @@ Años de vida */
             name="max_lifeSpan"
             onChange={handleChange}
           />
+          {errors.max_lifeSpan && (
+            <p className="error">{errors.max_lifeSpan}</p>
+          )}
         </div>
 
         <select onChange={(e) => handleTemperament(e)}>
@@ -173,10 +223,16 @@ Años de vida */
             return <option value={t.name}>{t.name}</option>;
           })}
         </select>
-        <p>{input.temperaments.map((p) => p + ", ")}</p>
-
         <button type="submit">Create Breed</button>
       </form>
+      {/* Liste de temperamentos seleccionadas y posibilidad de borrarlas */}
+      <div className="closeTemp">
+        {input.temperaments?.map((p) => (
+          <span on onClick={() => handleDeleteTemp(p)}>
+            {p + " | "}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

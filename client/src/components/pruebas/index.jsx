@@ -23,6 +23,13 @@ function Prueba() {
           <h2>El estado es: {isCheck === false ? " false" : " true"}</h2>
         </div>
       </div>
+      <select>
+        <optgroup label="WEIGHT">
+          <option value="all">todos!</option>
+          <option value="min">los más livianos</option>
+          <option value="max">los más pesados</option>
+        </optgroup>
+      </select>
     </div>
   );
 }

@@ -13,11 +13,6 @@ export default function SearchBar() {
     dispatch(getDogByName(name));
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(getDogByName(name));
-  }
-
   return (
     <div>
       <input

@@ -102,32 +102,42 @@ export default function Home() {
         Reload
       </button>
       <div>
+        <br />
+        <div>FILTERS:</div>
         {/* temperamentos: */}
         <select onChange={(e) => handleFilterTemperament(e)}>
-          <option value="temp">Temperament</option>
+          <optgroup label="TEMPERAMENTS">
+            <option value="temp">All</option>
 
-          {allTemperaments?.map((t) => {
-            return (
-              <option value={`${t.name}`} key={t.id}>
-                {t.name}
-              </option>
-            );
-          })}
+            {allTemperaments?.map((t) => {
+              return (
+                <option value={`${t.name}`} key={t.id}>
+                  {t.name}
+                </option>
+              );
+            })}
+          </optgroup>
         </select>
-
         <select onChange={(e) => utils.handleSortAlpha(e)}>
-          <option value="asc">A-Z</option>
-          <option value="desc">Z-A</option>
+          <optgroup label="ALPHABETIC">
+            <option value="all">All</option>
+            <option value="asc">A-Z</option>
+            <option value="desc">Z-A</option>
+          </optgroup>
         </select>
         <select onChange={(e) => utils.handleSortWeight(e)}>
-          <option value="all">all</option>
-          <option value="min">min weight</option>
-          <option value="max">max weight</option>
+          <optgroup label="WEIGHT">
+            <option value="all">all</option>
+            <option value="min">min weight</option>
+            <option value="max">max weight</option>
+          </optgroup>
         </select>
         <select onChange={(e) => handleFilterCreated(e)}>
-          <option value="todos">all</option>
-          <option value="existent">existentes</option>
-          <option value="created">creados</option>
+          <optgroup label="API - DB">
+            <option value="todos">all</option>
+            <option value="existent">existents</option>
+            <option value="created">created</option>
+          </optgroup>
         </select>
         <p>Current Page: {currentPage}</p>
         <div>
