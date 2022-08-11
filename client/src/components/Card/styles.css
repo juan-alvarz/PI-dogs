@@ -1,0 +1,25 @@
+.main-container-card {
+    background-color: rgba(71, 62, 50, 0.2);
+    backdrop-filter: blur(2px);
+    width: 380px;
+    height: 400px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    -webkit-box-shadow: -9px 11px 19px 1px rgba(0, 0, 0, 0.58);
+    -moz-box-shadow: -9px 11px 19px 1px rgba(0, 0, 0, 0.58);
+    box-shadow: -9px 11px 19px 1px rgba(0, 0, 0, 0.58);
+}
+
+.link-to-details a {
+    text-decoration: none;
+    color: #455F6C;
+}
+
+.image-dog-card img {
+    width: 70%;
+    border-radius: 10px;
+}
+
+.information-dog-card {
+    color: rgb(69, 95, 108);
+}

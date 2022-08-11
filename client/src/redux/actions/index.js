@@ -42,13 +42,6 @@ export function filterDogsByTemperament(payload) {
   };
 }
 
-/* export function filtersByTemperament(payload) {
-  return {
-    type: FILTERS_BY_TEMPERAMENT,
-    payload,
-  };
-}
- */
 export function filterCreated(payload) {
   return {
     type: FILTER_CREATED,

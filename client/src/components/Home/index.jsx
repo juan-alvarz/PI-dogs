@@ -12,6 +12,7 @@ import SearchBar from "../SearchBar";
 import { Link } from "react-router-dom";
 import DogCard from "../Card";
 import Paginado from "../Paginado";
+import "./home.css";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ export default function Home() {
     },
     handleClick: (e) => {
       e.preventDefault();
+
       setCurrentPage(1);
       dispatch(getDogs());
     },
@@ -78,67 +80,11 @@ export default function Home() {
   function handleFilterTemperament(e) {
     dispatch(filterDogsByTemperament(e.target.value));
   }
-  /*  function hanldeSortAlpha(e) {
-    e.preventDefault();
-    dispatch(sortByName(e.target.value));
-    setCurrentPage(1);
-    setOrder(
-      `Ordenado alfabéticamente ${
-        e.target.value === "asc" ? "Ascendente" : "Descendente"
-      }`
-    );
-  } */
 
   return (
     <div>
-      <h2>DoggyApp</h2>
-      <Link to="/createDog">crear perro</Link>
-      <SearchBar />
-      <button
-        onClick={(e) => {
-          utils.handleClick(e);
-        }}
-      >
-        Reload
-      </button>
       <div>
-        <br />
-        <div>FILTERS:</div>
-        {/* temperamentos: */}
-        <select onChange={(e) => handleFilterTemperament(e)}>
-          <optgroup label="TEMPERAMENTS">
-            <option value="temp">All</option>
-
-            {allTemperaments?.map((t) => {
-              return (
-                <option value={`${t.name}`} key={t.id}>
-                  {t.name}
-                </option>
-              );
-            })}
-          </optgroup>
-        </select>
-        <select onChange={(e) => utils.handleSortAlpha(e)}>
-          <optgroup label="ALPHABETIC">
-            <option value="all">All</option>
-            <option value="asc">A-Z</option>
-            <option value="desc">Z-A</option>
-          </optgroup>
-        </select>
-        <select onChange={(e) => utils.handleSortWeight(e)}>
-          <optgroup label="WEIGHT">
-            <option value="all">all</option>
-            <option value="min">min weight</option>
-            <option value="max">max weight</option>
-          </optgroup>
-        </select>
-        <select onChange={(e) => handleFilterCreated(e)}>
-          <optgroup label="API - DB">
-            <option value="todos">all</option>
-            <option value="existent">existents</option>
-            <option value="created">created</option>
-          </optgroup>
-        </select>
+        <Link to="/createDog">crear perro</Link>
         <p>Current Page: {currentPage}</p>
         <div>
           <button onClick={() => utils.prev(currentPage, setCurrentPage)}>
@@ -151,21 +97,74 @@ export default function Home() {
           />
           <button onClick={() => utils.next(currentPage)}>Next{"->"}</button>
         </div>
-        {/* magen
-Nombre
-Temperamento
-Peso */}
-        {currentDogs?.map((p) => {
-          return (
-            <DogCard
-              key={p.id}
-              name={p.name}
-              image={p.image}
-              temperament={p.temperament}
-              weight={p.weight}
-            />
-          );
-        })}
+
+        <div className="container-dogs-cards">
+          {currentDogs?.map((p) => {
+            return (
+              <div className="single-home-card">
+                <DogCard
+                  key={p.id}
+                  id={p.id}
+                  name={p.name}
+                  image={p.image}
+                  temperament={p.temperament}
+                  weight={p.weight}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="searchbar-home">
+        <h2>DoggyApp</h2>
+        <SearchBar />
+        <button
+          onClick={(e) => {
+            utils.handleClick(e);
+          }}
+        >
+          Reload
+        </button>
+        <br />
+        <div className="filters-home">
+          <div>FILTERS:</div>
+          {/* temperamentos: */}
+          <select onChange={(e) => handleFilterTemperament(e)}>
+            <optgroup label="TEMPERAMENTS">
+              <option value="temp">All</option>
+
+              {allTemperaments?.map((t) => {
+                return (
+                  <option value={`${t.name}`} key={t.id}>
+                    {t.name}
+                  </option>
+                );
+              })}
+            </optgroup>
+          </select>
+          <select onChange={(e) => utils.handleSortAlpha(e)}>
+            <optgroup label="ALPHABETIC">
+              <option value="all">All</option>
+              <option value="asc">A-Z</option>
+              <option value="desc">Z-A</option>
+            </optgroup>
+          </select>
+          <select onChange={(e) => utils.handleSortWeight(e)}>
+            <optgroup label="WEIGHT">
+              <option value="all">all</option>
+              <option value="min">min weight</option>
+              <option value="max">max weight</option>
+            </optgroup>
+          </select>
+
+          <select onChange={(e) => handleFilterCreated(e)}>
+            <optgroup label="API - DB">
+              <option value="All">all</option>
+              <option value="existent">existents</option>
+              <option value="created">created</option>
+            </optgroup>
+          </select>
+        </div>
       </div>
     </div>
   );

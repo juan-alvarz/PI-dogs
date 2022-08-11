@@ -5,6 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /*   background-image: linear-gradient(to top, #eadece, #dfd5c1, #d2cdb5, #c4c6ab, #b5bea1);
+ */
+  /*   background-color: aliceblue;
+ */
+  background-image: url('./images/FONDO-CREADO.png');
+  font-family: 'Oswald', sans-serif;
 }
 
 code {

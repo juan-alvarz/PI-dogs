@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import "./style.css";
+import { Link } from "react-router-dom";
 
+const image = require("../../images/logo-app.png");
 function Prueba() {
   const [isCheck, setCheck] = useState(false);
 
@@ -8,7 +11,10 @@ function Prueba() {
   };
 
   return (
-    <div>
+    <div className="div-de-pruebas">
+      <Link to="/home">
+        <img src={image} alt="Image not found" />
+      </Link>
       Select your pizza topping:
       <div>
         <input

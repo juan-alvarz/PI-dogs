@@ -38,7 +38,6 @@ const apiDog = async (req, res) => {
 
 const createNewDog = async (req, res) => {
   try {
-    // temperamento, image, pe
     const { name, height, weight, lifeSpan, temperament, image } = req.body;
     /*- Crea una raza de perro en la base de datos relacionada con sus temperamentos */
     if (!name || !weight || !temperament)

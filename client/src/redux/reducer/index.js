@@ -16,7 +16,7 @@ const initialState = {
   dogs: [],
   allDogs: [],
   temperaments: [],
-  dog: {},
+  dog: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -76,6 +76,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+
     case FILTER_CREATED:
       const allDoggys = state.allDogs;
       const filterCreated =

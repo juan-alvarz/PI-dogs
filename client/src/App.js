@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useParams } from "react-router-dom";
 import LandingPage from "./components/landingPage";
 import Home from "./components/Home";
 import Prueba from "./components/pruebas";
@@ -15,7 +15,7 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route path="/home" component={Home} />
           <Route path="/createDog" component={CreateDog} />
-          <Route path="home/:dogId" component={DetailCard} />
+          <Route path="/detail/:id" component={DetailCard} />
           <Route path="/test" component={Prueba} />
         </Switch>
       </div>

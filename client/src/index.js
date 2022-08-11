@@ -9,6 +9,10 @@ import { store } from "./redux/store";
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
+      <style>
+        @import
+        url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+      </style>
       <App />
     </React.StrictMode>
   </Provider>,

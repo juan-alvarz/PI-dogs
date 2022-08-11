@@ -11,16 +11,6 @@ import {
 const image_dog_default = require("../../images/default-dog.png");
 
 // --------------------- VALIDACIONES --------------------------
-/* 
-    name: "",
-    image: "",
-    max_height: "1",
-    min_height: "1",
-    min_weight: "1",
-    max_weight: "1",
-    min_lifeSpan: "1",
-    max_lifeSpan: 1,
-    temperaments: [], */
 function validate(input) {
   let errors = {};
   if (!input.name) {
@@ -31,6 +21,8 @@ function validate(input) {
     errors.max_weight = "max weight must be greater than min weight";
   else if (input.max_lifeSpan < input.min_lifeSpan)
     errors.max_lifeSpan = "max life span must be greater than min life span";
+  else if (input.temperaments.length === 0)
+    errors.temperament = "must have at least one temperament";
 
   return errors;
 }
@@ -64,7 +56,7 @@ Años de vida */
         : input.image,
     height: `${input.min_height} - ${input.max_height}`,
     weight: `${input.min_weight} - ${input.max_weight}`,
-    lifeSpan: `${input.min_lifeSpan} - ${input.max_lifeSpan} yea`,
+    lifeSpan: `${input.min_lifeSpan} - ${input.max_lifeSpan} years`,
     temperament: input.temperaments.join(", "),
   };
 
@@ -223,7 +215,17 @@ Años de vida */
             return <option value={t.name}>{t.name}</option>;
           })}
         </select>
-        <button type="submit">Create Breed</button>
+        {errors.temperament ? (
+          <p className="error">{errors.temperament}</p>
+        ) : (
+          ""
+        )}
+        <button
+          type="submit"
+          disabled={Object.keys(errors).length !== 0 ? true : false}
+        >
+          Create Breed
+        </button>
       </form>
       {/* Liste de temperamentos seleccionadas y posibilidad de borrarlas */}
       <div className="closeTemp">
