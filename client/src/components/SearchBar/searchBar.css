@@ -1,0 +1,44 @@
+.searchbar-component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px 0 0 7px;
+}
+
+
+.searchbar-component input,
+textarea {
+    color: rgb(69, 95, 108);
+    font-family: 'Oswald', sans-serif;
+    height: 30px;
+    text-align: center;
+    /*     border-radius: 5px;
+ */
+    border: 3px solid rgb(69, 95, 108);
+    text-decoration: none;
+    background-color: transparent;
+    width: 250px;
+    transition: .3s all;
+}
+
+.searchbar-component input:focus {
+    width: 280px;
+    border: 3px solid rgb(69, 95, 108);
+    outline: none;
+    background-color: aliceblue;
+}
+
+.searchbar-component span {
+    border-radius: 0px 7px 7px 0px;
+
+    border: 4px solid rgb(69, 95, 108);
+    width: 30px;
+    height: 30px;
+    background-color: rgb(69, 95, 108);
+    justify-content: center;
+}
+
+.searchbar-component span img {
+    width: 90%;
+    height: 90%;
+}

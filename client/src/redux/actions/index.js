@@ -57,7 +57,8 @@ export const getDogByName = (dogName) => (dispatch) => {
         type: GET_DOG_BY_NAME,
         payload: data,
       })
-    );
+    )
+    .then((r) => console.log(r));
 };
 
 export function sortByName(payload) {

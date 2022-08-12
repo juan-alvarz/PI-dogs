@@ -45,7 +45,7 @@ Años de vida */
     min_weight: "1",
     max_weight: "1",
     min_lifeSpan: "1",
-    max_lifeSpan: 1,
+    max_lifeSpan: "1",
     temperaments: [],
   });
   const sendToPost = {
@@ -76,6 +76,7 @@ Años de vida */
       })
     );
     console.log(input);
+    console.log(sendToPost);
   }
   function handleTemperament(e) {
     if (e.target.value !== "temp") {
@@ -230,9 +231,7 @@ Años de vida */
       {/* Liste de temperamentos seleccionadas y posibilidad de borrarlas */}
       <div className="closeTemp">
         {input.temperaments?.map((p) => (
-          <span on onClick={() => handleDeleteTemp(p)}>
-            {p + " | "}
-          </span>
+          <span onClick={() => handleDeleteTemp(p)}>{p + " | "}</span>
         ))}
       </div>
     </div>

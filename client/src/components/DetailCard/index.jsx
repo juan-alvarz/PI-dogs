@@ -5,13 +5,10 @@ import { getDog } from "../../redux/actions";
 import "./styles.css";
 
 //imagen-logo
-const imageLogo = require("../../images/default-dog.png");
 
 export default function DetailCard() {
   let { id } = useParams();
-  //console.log(params);
-  //  const { id } = useParams();
-  //console.log(props);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,7 +16,6 @@ export default function DetailCard() {
   }, [dispatch]);
 
   let Dog = useSelector((state) => state.dog);
-  //Dog = Dog[0];
 
   return (
     <div className="main-container-details">

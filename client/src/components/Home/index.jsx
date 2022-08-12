@@ -6,6 +6,7 @@ import {
   filterDogsByTemperament,
   filterCreated,
   sortByName,
+  getDogByName,
   sortByWeight,
 } from "../../redux/actions";
 import SearchBar from "../SearchBar";
@@ -13,6 +14,7 @@ import { Link } from "react-router-dom";
 import DogCard from "../Card";
 import Paginado from "../Paginado";
 import "./home.css";
+import "../SearchBar/searchBar.css";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -27,8 +29,11 @@ export default function Home() {
   const indexOfFirstDog = indexOfLastDog - dogsPage;
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
   const [order, setOrder] = useState("");
+  //para la searchBar
+  const [nameDoggy, setName] = useState("");
 
-  //define todas las funciones necesarias en un objeto
+  const IMAGEN = require("../../images/search-icon.png");
+  //some functions in an object
   const utils = {
     next: (state) => {
       if (state <= 21) {
@@ -45,7 +50,6 @@ export default function Home() {
     },
     handleClick: (e) => {
       e.preventDefault();
-
       setCurrentPage(1);
       dispatch(getDogs());
     },
@@ -75,15 +79,96 @@ export default function Home() {
 
   function handleFilterCreated(e) {
     dispatch(filterCreated(e.target.value));
+    setCurrentPage(1);
   }
 
   function handleFilterTemperament(e) {
     dispatch(filterDogsByTemperament(e.target.value));
+    setCurrentPage(1);
+  }
+  //function for input searchbar
+  function handleInputChange(e) {
+    e.preventDefault();
+    console.log(nameDoggy);
+    console.log(e.target.value);
+    setName(e.target.value);
+    setCurrentPage(1);
+    e.target.value
+      ? dispatch(getDogByName(nameDoggy))
+      : dispatch(getDogByName(""));
   }
 
   return (
     <div>
-      <div>
+      <div className="navbar-home">
+        <div className="title-and-search">
+          <h2 className="title-nav-main" onClick={(e) => utils.handleClick(e)}>
+            DoggyApp
+          </h2>
+          <div className="searchbar-component">
+            <input
+              className="searchbar-component"
+              /*             onChange={(e) => handleInputChange(e)}
+               */ type="text"
+              onChange={(e) => handleInputChange(e)}
+              placeholder="Search a breed"
+            />
+            <span>
+              <img src={IMAGEN} alt="" />
+            </span>
+          </div>
+        </div>
+        <div className="reload-and-filters">
+          <div className="filters-home">
+            <span className="filters-title">FILTERS:</span>
+            <select onChange={(e) => handleFilterTemperament(e)}>
+              <optgroup label="TEMPERAMENTS">
+                <option value="temp">All</option>
+
+                {allTemperaments?.map((t) => {
+                  return (
+                    <option value={`${t.name}`} key={t.id}>
+                      {t.name}
+                    </option>
+                  );
+                })}
+              </optgroup>
+            </select>
+            <select onChange={(e) => utils.handleSortAlpha(e)}>
+              <optgroup label="ALPHABETIC">
+                <option value="all">All</option>
+                <option value="asc">A-Z</option>
+                <option value="desc">Z-A</option>
+              </optgroup>
+            </select>
+            <select onChange={(e) => utils.handleSortWeight(e)}>
+              <optgroup label="WEIGHT">
+                <option value="all">All</option>
+                <option value="min">min weight</option>
+                <option value="max">max weight</option>
+              </optgroup>
+            </select>
+            <select onChange={(e) => handleFilterCreated(e)}>
+              <optgroup label="API - DB">
+                <option value="All">All</option>
+                <option value="existent">existents</option>
+                <option value="created">created</option>
+              </optgroup>
+            </select>
+            <button
+              className="reload-page"
+              onClick={(e) => {
+                utils.handleClick(e);
+              }}
+            >
+              <span>RELOAD</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* SEARCHBAR ^^^^^ /////////////// */}
+
+      <div className="main-container-home">
         <Link to="/createDog">crear perro</Link>
         <p>Current Page: {currentPage}</p>
         <div>
@@ -113,57 +198,6 @@ export default function Home() {
               </div>
             );
           })}
-        </div>
-      </div>
-      <div className="searchbar-home">
-        <h2>DoggyApp</h2>
-        <SearchBar />
-        <button
-          onClick={(e) => {
-            utils.handleClick(e);
-          }}
-        >
-          Reload
-        </button>
-        <br />
-        <div className="filters-home">
-          <div>FILTERS:</div>
-          {/* temperamentos: */}
-          <select onChange={(e) => handleFilterTemperament(e)}>
-            <optgroup label="TEMPERAMENTS">
-              <option value="temp">All</option>
-
-              {allTemperaments?.map((t) => {
-                return (
-                  <option value={`${t.name}`} key={t.id}>
-                    {t.name}
-                  </option>
-                );
-              })}
-            </optgroup>
-          </select>
-          <select onChange={(e) => utils.handleSortAlpha(e)}>
-            <optgroup label="ALPHABETIC">
-              <option value="all">All</option>
-              <option value="asc">A-Z</option>
-              <option value="desc">Z-A</option>
-            </optgroup>
-          </select>
-          <select onChange={(e) => utils.handleSortWeight(e)}>
-            <optgroup label="WEIGHT">
-              <option value="all">all</option>
-              <option value="min">min weight</option>
-              <option value="max">max weight</option>
-            </optgroup>
-          </select>
-
-          <select onChange={(e) => handleFilterCreated(e)}>
-            <optgroup label="API - DB">
-              <option value="All">all</option>
-              <option value="existent">existents</option>
-              <option value="created">created</option>
-            </optgroup>
-          </select>
         </div>
       </div>
     </div>

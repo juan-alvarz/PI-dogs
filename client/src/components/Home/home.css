@@ -1,23 +1,108 @@
 .container-dogs-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    padding-bottom: 100px;
 }
 
-
-/* FINAL BOSS! */
-.searchbar-home {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: aliceblue;
-    opacity: 90%;
-    backdrop-filter: blur(100px);
-    display: grid;
-    grid-template-columns: 10% 25% 10% 10% 30%;
-    align-items: center;
-}
 
 .single-home-card {
     padding: 10px;
+}
+
+.single-home-card a {
+    text-decoration: none;
+    color: rgb(51, 69, 79)
+}
+
+.main-container-home {
+    padding-top: 100px;
+}
+
+/* -------------------------------------- */
+/* FINAL BOSS!! */
+/* principal navbar of app */
+.navbar-home {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(240, 248, 255, .5);
+
+    backdrop-filter: blur(3px);
+    box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.5);
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: 80px;
+}
+
+/* component in home that have title app and the searchbar */
+.title-and-search {
+    padding-left: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* title of app */
+.title-nav-main {
+    padding-right: 8px;
+    color: rgb(32, 71, 89);
+    cursor: pointer;
+}
+
+/* div that contains the filters and reload button */
+.reload-and-filters {
+    display: flex;
+}
+
+/* filters of home */
+.filters-home {
+    display: flex;
+    padding-right: 10px;
+    justify-content: space-around;
+    width: 70vh;
+}
+
+.filters-home span.filters-title {
+    color: rgb(32, 71, 89);
+    border-bottom: 1px solid rgb(32, 71, 89);
+}
+
+
+
+.filters-home select {
+    border-radius: 5px;
+    border: 1px solid aliceblue;
+    background-color: aliceblue;
+    font-family: inherit;
+    font-size: 16px;
+    transition: .3s all;
+    box-shadow: 2px 3px 4px rgba(32, 71, 89.4);
+}
+
+.filters-home select:hover {
+    background-color: rgb(32, 71, 89.5);
+    color: aliceblue;
+}
+
+.filters-home select:focus {
+    background-color: rgb(32, 71, 89.5);
+    color: aliceblue;
+}
+
+.filters-home button {
+    background-color: rgb(32, 71, 89);
+    border: none;
+    color: aliceblue;
+    border-radius: 5px;
+    padding-left: 5px;
+    box-shadow: 2px 3px 4px black;
+    transition: .3s all;
+}
+
+.filters-home button:hover {
+    letter-spacing: 1px;
+    cursor: pointer;
 }

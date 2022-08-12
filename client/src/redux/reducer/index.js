@@ -47,6 +47,7 @@ function rootReducer(state = initialState, action) {
           ...state,
         };
       }
+
     case GET_TEMPERAMENTS:
       return {
         ...state,

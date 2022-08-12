@@ -10,32 +10,19 @@ function Prueba() {
     setCheck(!isCheck);
   };
 
+  const IconSearch = require("../../images/search-icon.png");
   return (
-    <div className="div-de-pruebas">
-      <Link to="/home">
-        <img src={image} alt="Image not found" />
-      </Link>
-      Select your pizza topping:
-      <div>
+    <div class="wrap">
+      <div class="search">
         <input
-          type="checkbox"
-          name="topping"
-          value="Paneer"
-          checked={isCheck}
-          onChange={(e) => handleOnChange(e)}
+          type="text"
+          class="searchTerm"
+          placeholder="What are you looking for?"
         />
-        <p>Paneer</p>
-        <div>
-          <h2>El estado es: {isCheck === false ? " false" : " true"}</h2>
-        </div>
+        <button type="submit" class="searchButton">
+          <img src={IconSearch} alt="" />
+        </button>
       </div>
-      <select>
-        <optgroup label="WEIGHT">
-          <option value="all">todos!</option>
-          <option value="min">los más livianos</option>
-          <option value="max">los más pesados</option>
-        </optgroup>
-      </select>
     </div>
   );
 }

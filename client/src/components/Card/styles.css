@@ -8,6 +8,12 @@
     -webkit-box-shadow: -9px 11px 19px 1px rgba(0, 0, 0, 0.58);
     -moz-box-shadow: -9px 11px 19px 1px rgba(0, 0, 0, 0.58);
     box-shadow: -9px 11px 19px 1px rgba(0, 0, 0, 0.58);
+    transition: .3s all;
+}
+
+.main-container-card:hover {
+    background-color: rgba(136, 119, 98, 0.5);
+    backdrop-filter: blur(2px);
 }
 
 .link-to-details a {
@@ -21,5 +27,5 @@
 }
 
 .information-dog-card {
-    color: rgb(69, 95, 108);
+    color: rgb(51, 69, 79)
 }

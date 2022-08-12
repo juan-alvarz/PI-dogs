@@ -2,12 +2,11 @@
 /* The navigation bar */
 .nav-dog-detail {
     position: fixed;
-    background-color: rgba(240, 248, 255, .9);
+    background-color: rgba(240, 248, 255, .5);
 
-    opacity: 90%;
-    backdrop-filter: blur(4px);
-    height: 75px;
+    backdrop-filter: blur(3px);
     box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.5);
+    height: 75px;
     font-size: 45px;
     top: 0;
     right: 0;
@@ -17,12 +16,12 @@
 /* link */
 .nav-dog-detail a {
     text-decoration: none;
-    color: cadetblue;
+    color: #455F6C;
     transition: .3s all;
 }
 
 .nav-dog-detail a:hover {
-    color: rgb(69, 95, 108);
+    color: cadetblue;
     /*     background-color: rgb(216, 225, 233);
     border-radius: 10px;
     padding: 5px; */
@@ -31,7 +30,7 @@
 
 /* styles for principal card */
 .card-details {
-    border-radius: 10px;
+    border-radius: 3px;
     width: 55%;
     max-width: 950px;
     -webkit-box-shadow: -2px 0px 19px 0px rgba(0, 0, 0, 0.65);
@@ -41,7 +40,7 @@
     margin: auto;
     margin-top: 100px;
     margin-bottom: 50px;
-    background-color: rgba(200, 200, 200, .1);
+    background-color: rgba(255, 255, 255, .2);
     backdrop-filter: blur(4px);
 }
 
