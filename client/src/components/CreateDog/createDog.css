@@ -1,0 +1,191 @@
+/* Principal container of form and previous */
+.createdog-form-previous {
+    font-family: inherit;
+    background-color: rgba(255, 255, 255, .1);
+    border-radius: 20px;
+    box-shadow: 0 5px 9px rgba(0, 0, 0, .3);
+    color: rgb(10, 10, 10);
+    backdrop-filter: blur(3px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+.createdog-form-previous .succes {
+    border: 1px solid green;
+}
+
+/* Styles for search bar */
+.link-back-home {
+    background-color: aliceblue;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 9vh;
+}
+
+.link-back-home img {
+    height: 20%;
+}
+
+.main-form {
+    font-size: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+/* PRINCIPAL STYLES OF INPUTS */
+.main-form input {
+    outline: navajowhite;
+    font-family: inherit;
+    border-radius: 6px;
+    text-align: center;
+    color: rgb(69, 75, 138);
+    background-color: rgba(255, 255, 255, .4);
+    border: none;
+    transition: .3s all;
+}
+
+.main-form input:hover {
+    background-color: rgba(69, 95, 108, .4);
+}
+
+.main-form input:focus {
+    background-color: rgba(69, 95, 108, .4);
+}
+
+.main-form button {
+    color: aliceblue;
+    margin: 10px;
+    border: none;
+    background-color: rgba(69, 95, 108, 1);
+    border-radius: 7px;
+    padding: 3px;
+    transition: .3s all;
+    cursor: pointer;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+}
+
+.main-form button:hover {
+    letter-spacing: 1.1px;
+}
+
+.closeTemp {
+    text-align: center;
+}
+
+.closeTemp span {
+    font-size: .8rem;
+    color: rgba(69, 95, 108, 1);
+    padding-left: 2px;
+    transition: .3s all;
+    text-align: center;
+    background-color: #f0f8ff85;
+    border-radius: 5px;
+    border: 1px solid cadetblue;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+}
+
+.closeTemp span:hover {
+    color: aliceblue;
+    text-decoration: line-through;
+    cursor: pointer;
+    background-color: brown;
+}
+
+.main-form button:disabled {
+    cursor: not-allowed;
+    color: gainsboro;
+    background-color: whitesmoke;
+}
+
+.create-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 95%;
+}
+
+
+.previous-create {
+    width: 100%;
+    height: 80%;
+    border-left: 2px solid #455F6C;
+}
+
+.previous-create img {
+    width: 95%;
+}
+
+.input-number {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    font-size: .85rem;
+    align-items: center;
+}
+
+.input-number input {
+    outline: none;
+    width: 40px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.temperaments-create {
+    margin: 20px;
+}
+
+.temperaments-create span {
+    padding-right: 5px;
+}
+
+.temperaments-create select {
+    font-family: inherit;
+    border-radius: 7px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .3);
+    background-color: aliceblue;
+    border: none;
+    outline: none;
+}
+
+.temperaments-create select:hover {
+    background-color: whitesmoke;
+}
+
+/* STYLES FOR ERRORS */
+.errors-container {
+    position: absolute;
+    background-color: red;
+    margin-top: 25%;
+    right: 0;
+}
+
+.warning {
+    font-size: .8rem;
+    padding: 3px;
+    border-radius: 5px;
+    color: rgb(120, 94, 25);
+    background-color: rgba(236, 190, 60, .5);
+}
+
+.error {
+    background-color: rgb(237, 80, 80);
+    color: rgb(92, 40, 40);
+    font-size: .80rem;
+    width: 80%;
+    border-radius: 5px;
+}
+
+.error-input input {
+    border: 1px solid darkred;
+}
+
+.success input {
+    border: 1px solid green
+}

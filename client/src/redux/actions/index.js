@@ -43,6 +43,7 @@ export function filterDogsByTemperament(payload) {
 }
 
 export function filterCreated(payload) {
+  console.log(payload);
   return {
     type: FILTER_CREATED,
     payload,

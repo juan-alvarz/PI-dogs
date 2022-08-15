@@ -6,15 +6,18 @@ import {
   createNewBreed,
   getTemperaments,
 } from "../../redux/actions";
-
+import DogCard from "../Card";
+import "./createDog.css";
 //  IMAGEN DEFAULT DE PERRO
-const image_dog_default = require("../../images/default-dog.png");
 
 // --------------------- VALIDACIONES --------------------------
 function validate(input) {
+  const correctName = new RegExp("([A-Z]+)+$", "i");
   let errors = {};
   if (!input.name) {
     errors.name = "name is required";
+  } else if (!correctName.test(input.name)) {
+    errors.name = "only text is supported";
   } else if (input.max_height < input.min_height)
     errors.max_height = "max height must be greater than min height";
   else if (input.max_weight < input.min_weight)
@@ -22,7 +25,7 @@ function validate(input) {
   else if (input.max_lifeSpan < input.min_lifeSpan)
     errors.max_lifeSpan = "max life span must be greater than min life span";
   else if (input.temperaments.length === 0)
-    errors.temperament = "must have at least one temperament";
+    errors.temperament = "could have at least one temperament";
 
   return errors;
 }
@@ -52,12 +55,13 @@ Años de vida */
     name: input.name,
     image:
       input.image === ""
-        ? "https://static.vecteezy.com/system/resources/thumbnails/006/720/668/small/dog-face-logo-free-vector.jpg"
-        : input.image,
+        ? "https://i.pinimg.com/originals/b2/dc/d9/b2dcd964eedbaa95a87783759e225f6e.jpg"
+        : /* "https://static.vecteezy.com/system/resources/thumbnails/006/720/668/small/dog-face-logo-free-vector.jpg" */
+          input.image,
     height: `${input.min_height} - ${input.max_height}`,
     weight: `${input.min_weight} - ${input.max_weight}`,
     lifeSpan: `${input.min_lifeSpan} - ${input.max_lifeSpan} years`,
-    temperament: input.temperaments.join(", "),
+    temperament: input.temperaments ? input.temperaments.join(", ") : "",
   };
 
   useEffect(() => {
@@ -75,8 +79,12 @@ Años de vida */
         [e.target.name]: e.target.value,
       })
     );
-    console.log(input);
-    console.log(sendToPost);
+    if (e.target.value === "temperament") {
+      setInput({
+        ...input,
+        temperaments: [...input.temperaments, e.target.value],
+      });
+    }
   }
   function handleTemperament(e) {
     if (e.target.value !== "temp") {
@@ -115,124 +123,179 @@ Años de vida */
 
   return (
     <div>
-      <Link to="/home">
-        <img src={image_dog_default} alt="" />
-      </Link>
-      <h1>Create a new breed</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            placeholder="Name for your breed"
-            type="text"
-            value={input.name}
-            name="name"
-            autoComplete="off"
-            onChange={handleChange}
-          />
-          {errors.name && <p className="error">{errors.name}</p>}
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Image"
-            value={input.image}
-            name="image"
-            autoComplete="off"
-            onChange={handleChange}
-          />
-          {input.image === "" ? (
-            <p className="warning">
-              if you dont put image, the app set an image by default
-            </p>
-          ) : (
-            ""
-          )}
-        </div>
-        <div>
-          <label>Min Height: </label>
-          <input
-            type="number"
-            value={input.min_height}
-            min="1"
-            name="min_height"
-            onChange={handleChange}
-          />
-          <label>Max Height: </label>
-          <input
-            type="number"
-            size="10"
-            min={(Number(input.min_height) + 1).toString()}
-            value={input.max_height}
-            name="max_height"
-            onChange={handleChange}
-          />
-          {errors.max_height && <p className="error">{errors.max_height}</p>}
-        </div>
-        <div>
-          <label>Min Weight:</label>
-          <input
-            type="number"
-            min="1"
-            value={input.min_weight}
-            name="min_weight"
-            onChange={handleChange}
-          />
+      <div className="link-back-home">
+        <Link to="/home">
+          <span>Back to Doggy App</span>
+        </Link>
+      </div>
+      <div className="createdog-form-previous">
+        <div className="create-form">
+          <h2>Create a new breed</h2>
+          <form onSubmit={handleSubmit} className="main-form">
+            <div className={errors.name ? "error-input" : ""}>
+              <label>Name:</label>
+              <input
+                placeholder="Name for your breed"
+                type="text"
+                value={input.name}
+                name="name"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+              {errors.name && <p className="error">{errors.name}</p>}
+            </div>
+            <div>
+              <label>Image:</label>
+              <input
+                type="text"
+                placeholder="Image"
+                value={input.image}
+                name="image"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+              {input.image === "" ? (
+                <p className="warning">
+                  if you dont put image, the app set an image by default
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="temperaments-create">
+              <span>Temperaments:</span>
+              <select onChange={(e) => handleTemperament(e)} name="temperament">
+                <optgroup label="Temperaments">
+                  <option value="temp">Choose one or more</option>
+                  {temperaments?.map((t) => {
+                    return <option value={t.name}>{t.name}</option>;
+                  })}
+                </optgroup>
+              </select>
+              <div className="closeTemp">
+                {input.temperaments?.map((p) => (
+                  <span onClick={() => handleDeleteTemp(p)}>{p + " "}</span>
+                ))}
+              </div>
+              {errors.temperament ? (
+                <p className="warning">{errors.temperament}</p>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="input-number">
+              <label>Min Height: </label>
+              <input
+                type="number"
+                value={input.min_height}
+                min="1"
+                name="min_height"
+                onChange={handleChange}
+              />
+              <label>Max Height: </label>
+              <input
+                type="number"
+                min={(Number(input.min_height) + 1).toString()}
+                value={input.max_height}
+                name="max_height"
+                onChange={handleChange}
+              />
+              {errors.max_height && (
+                <p className="error">{errors.max_height}</p>
+              )}
+            </div>
+            <div className="input-number">
+              <label>Min Weight:</label>
+              <input
+                type="number"
+                min="1"
+                value={input.min_weight}
+                name="min_weight"
+                onChange={handleChange}
+              />
 
-          <label>Max Weight:</label>
-          <input
-            type="number"
-            min={(Number(input.min_weight) + 1).toString()}
-            value={input.max_weight}
-            name="max_weight"
-            onChange={handleChange}
-          />
-          {errors.max_weight && <p className="error">{errors.max_weight}</p>}
-        </div>
-        <div>
-          <label>Min life span: </label>
-          <input
-            type="number"
-            value={input.min_lifeSpan}
-            min="1"
-            name="min_lifeSpan"
-            onChange={handleChange}
-          />
-          <label>Max life span:</label>
-          <input
-            type="number"
-            min={(Number(input.min_lifeSpan) + 1).toString()}
-            value={input.max_lifeSpan}
-            name="max_lifeSpan"
-            onChange={handleChange}
-          />
-          {errors.max_lifeSpan && (
-            <p className="error">{errors.max_lifeSpan}</p>
-          )}
+              <label>Max Weight:</label>
+              <input
+                type="number"
+                min={(Number(input.min_weight) + 1).toString()}
+                value={input.max_weight}
+                name="max_weight"
+                onChange={handleChange}
+              />
+              {errors.max_weight && (
+                <p className="error">{errors.max_weight}</p>
+              )}
+            </div>
+            <div className="input-number">
+              <label>Min life span: </label>
+              <input
+                type="number"
+                value={input.min_lifeSpan}
+                min="1"
+                name="min_lifeSpan"
+                onChange={handleChange}
+              />
+              <label>Max life span:</label>
+              <input
+                type="number"
+                min={(Number(input.min_lifeSpan) + 1).toString()}
+                value={input.max_lifeSpan}
+                name="max_lifeSpan"
+                onChange={handleChange}
+              />
+              {errors.max_lifeSpan && (
+                <p className="error">{errors.max_lifeSpan}</p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={Object.keys(errors).length !== 0 ? true : false}
+            >
+              Create Breed
+            </button>
+          </form>
+          {/* Liste de temperamentos seleccionadas y posibilidad de borrarlas */}
         </div>
 
-        <select onChange={(e) => handleTemperament(e)}>
-          <option value="temp">Choose one or more</option>
-          {temperaments?.map((t) => {
-            return <option value={t.name}>{t.name}</option>;
-          })}
-        </select>
-        {errors.temperament ? (
-          <p className="error">{errors.temperament}</p>
-        ) : (
-          ""
-        )}
-        <button
-          type="submit"
-          disabled={Object.keys(errors).length !== 0 ? true : false}
-        >
-          Create Breed
-        </button>
-      </form>
-      {/* Liste de temperamentos seleccionadas y posibilidad de borrarlas */}
-      <div className="closeTemp">
-        {input.temperaments?.map((p) => (
-          <span onClick={() => handleDeleteTemp(p)}>{p + " | "}</span>
-        ))}
+        {/* ========================>>PREVIOUS<<=================== */}
+
+        <div className="container-previous">
+          <h2>Previous</h2>
+          <div className="previous-create">
+            <h3>
+              <span>{input.name ? input.name : "name of your breed"}</span>
+            </h3>
+            <div className="image-example">
+              <img
+                src={
+                  input.image
+                    ? input.image
+                    : "https://i.pinimg.com/originals/b2/dc/d9/b2dcd964eedbaa95a87783759e225f6e.jpg"
+                }
+                alt="image not found"
+              />
+            </div>
+            <div className="temperament-example">
+              <span>
+                Temperament:{" "}
+                {input.temperaments.length
+                  ? input.temperaments.map((t) => <span>{t + ", "}</span>)
+                  : "--Without temperaments--"}
+              </span>
+            </div>
+            <div className="height-example">
+              <span>height:{sendToPost.height} cm</span>
+            </div>
+
+            <div className="weight-example">
+              <span>weight: {sendToPost.weight} kg</span>
+            </div>
+            <div className="lifespan-example">
+              <span>Life span:{sendToPost.lifeSpan}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

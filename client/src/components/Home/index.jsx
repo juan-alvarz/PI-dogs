@@ -9,7 +9,6 @@ import {
   getDogByName,
   sortByWeight,
 } from "../../redux/actions";
-import SearchBar from "../SearchBar";
 import { Link } from "react-router-dom";
 import DogCard from "../Card";
 import Paginado from "../Paginado";
@@ -33,6 +32,8 @@ export default function Home() {
   const [nameDoggy, setName] = useState("");
 
   const IMAGEN = require("../../images/search-icon.png");
+  const next_image = require("../../images/pagination-right.png");
+  const prev_image = require("../../images/pagination-left.png");
   //some functions in an object
   const utils = {
     next: (state) => {
@@ -167,22 +168,32 @@ export default function Home() {
         </div>
       </div>
       {/* SEARCHBAR ^^^^^ /////////////// */}
+      {/* ===================================== */}
 
       <div className="main-container-home">
-        <Link to="/createDog">crear perro</Link>
-        <p>Current Page: {currentPage}</p>
-        <div>
-          <button onClick={() => utils.prev(currentPage, setCurrentPage)}>
-            {"<-"}Prev
-          </button>
-          <Paginado
-            dogsPage={dogsPage}
-            allDogs={allDogs.length}
-            paginado={utils.paginado}
-          />
-          <button onClick={() => utils.next(currentPage)}>Next{"->"}</button>
+        <div className="paginated-next-prev">
+          <div className="next-prev">
+            <button onClick={() => utils.prev(currentPage, setCurrentPage)}>
+              <img src={prev_image} alt />
+            </button>
+            <span>{currentPage}</span>
+            <button onClick={() => utils.next(currentPage)}>
+              <img src={next_image} alt="" />
+            </button>
+          </div>
+          <div className="pagination-container-home">
+            <Paginado
+              dogsPage={dogsPage}
+              allDogs={allDogs.length}
+              paginado={utils.paginado}
+            />
+          </div>
         </div>
-
+        <div className="create-dog">
+          <Link to="/createDog">
+            <span>create a new breed</span>
+          </Link>
+        </div>
         <div className="container-dogs-cards">
           {currentDogs?.map((p) => {
             return (

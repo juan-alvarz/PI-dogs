@@ -55,6 +55,7 @@ const createNewDog = async (req, res) => {
     if (dbDogLength !== 0) {
       let hash = {};
       dbContenido = dbContenido.concat(dbDog);
+      console.log(dbContenido);
       dbContenido = dbContenido.filter((p) =>
         hash[p.id] ? false : (hash[p.id] = true)
       );

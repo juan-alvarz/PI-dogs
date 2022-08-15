@@ -18,7 +18,7 @@ export default function DogCard({ id, name, image, temperament, weight }) {
             {temperament ? temperament : "Unknown"}
           </p>
           <p>
-            <strong>weight: </strong> {weight} kg
+            <strong>weight:</strong> {weight} kg
           </p>
         </div>
       </Link>

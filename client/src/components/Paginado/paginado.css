@@ -1,0 +1,117 @@
+/* .pagination-component {
+    margin: auto;
+    width: 500px;
+    justify-items: center;
+}
+
+.pagination-container {
+    border: 1px solid red;
+    margin: auto;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+
+    align-items: center;
+}
+
+
+.pagination-container a {
+    background-color: white;
+    border: 1px solid blue
+}
+ */
+
+.pagination-container {
+    padding-top: 10px;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    width: 100vh;
+    height: 30px;
+}
+
+.pagination-container button {
+    font-family: inherit;
+    width: 30px;
+    color: aliceblue;
+    background-color: #455F6C;
+    border: none;
+    transition: .3s all;
+    border-radius: 5px 5px 8px 8px;
+
+}
+
+.pagination-container button:hover {
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, .6);
+    height: 110%;
+}
+
+
+
+.paginated-next-prev {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.next-prev {
+    width: 150px;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.next-prev button {
+    background-color: rgba(69, 95, 108);
+    border: none;
+    width: 33%;
+    height: 100%;
+    border: 2px solid rgb(69, 95, 108);
+    border-radius: 7px;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, .4);
+    transition: .3s all;
+}
+
+.next-prev button:hover {
+    cursor: pointer;
+    background-color: rgb(79, 105, 118);
+    height: 105%;
+}
+
+.next-prev button img {
+    width: 100%;
+    margin: auto;
+}
+
+.next-prev span {
+    background-color: aliceblue;
+    font-size: inherit;
+    color: rgb(69, 95, 108);
+    width: 33%;
+    border-radius: 8px;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, .5);
+}
+
+.create-dog {
+    padding: 10px;
+    padding-top: 15px;
+}
+
+
+.create-dog a {
+    border-radius: 10px;
+    width: max-content;
+    height: max-content;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .4);
+    padding: 5px;
+    text-decoration: none;
+    background-color: rgb(69, 95, 108);
+    color: aliceblue;
+    transition: .3s all;
+}
+
+.create-dog a:hover {
+    background-color: rgb(79, 105, 118);
+    letter-spacing: 1px;
+}

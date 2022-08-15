@@ -11,11 +11,10 @@ export default function DetailCard() {
 
   const dispatch = useDispatch();
 
+  let Dog = useSelector((state) => state.dog);
   useEffect(() => {
     dispatch(getDog(id));
   }, [dispatch]);
-
-  let Dog = useSelector((state) => state.dog);
 
   return (
     <div className="main-container-details">
