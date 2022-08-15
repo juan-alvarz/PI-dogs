@@ -10,7 +10,7 @@ import DogCard from "../Card";
 import "./createDog.css";
 //  IMAGEN DEFAULT DE PERRO
 
-// --------------------- VALIDACIONES --------------------------
+// --------------------- VALIDACIONES ---------------------------------------------
 function validate(input) {
   const correctName = new RegExp("([A-Z]+)+$", "i");
   let errors = {};
@@ -29,7 +29,7 @@ function validate(input) {
 
   return errors;
 }
-//---------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 export default function CreateDog() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -56,8 +56,7 @@ Años de vida */
     image:
       input.image === ""
         ? "https://i.pinimg.com/originals/b2/dc/d9/b2dcd964eedbaa95a87783759e225f6e.jpg"
-        : /* "https://static.vecteezy.com/system/resources/thumbnails/006/720/668/small/dog-face-logo-free-vector.jpg" */
-          input.image,
+        : input.image,
     height: `${input.min_height} - ${input.max_height}`,
     weight: `${input.min_weight} - ${input.max_weight}`,
     lifeSpan: `${input.min_lifeSpan} - ${input.max_lifeSpan} years`,
@@ -125,7 +124,9 @@ Años de vida */
     <div>
       <div className="link-back-home">
         <Link to="/home">
-          <span>Back to Doggy App</span>
+          <span>
+            Back to <strong>Doggy App</strong>
+          </span>
         </Link>
       </div>
       <div className="createdog-form-previous">

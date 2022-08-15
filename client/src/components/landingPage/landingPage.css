@@ -1,0 +1,128 @@
+.main-container-landingPage {
+    color: rgb(69, 95, 108);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-image: url('../../images/cover-landing-page.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    object-fit: cover;
+    background-size: cover;
+}
+
+.welcome-page {
+    display: grid;
+    position: fixed;
+    grid-template-columns: 90%10%;
+    font-size: 100%;
+    text-align: center;
+    /* align-items: center; */
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(8, 8, 8, 0.176);
+    color: rgb(69, 95, 108);
+    text-shadow: 0 2px 3px rgb(0 0 0 / 90%);
+    box-shadow: 0 6px 9px rgba(0, 0, 0, .4);
+    backdrop-filter: blur(2px);
+    height: 100px;
+    transition: .3s all;
+    align-items: center;
+    justify-items: center;
+}
+
+.welcome-page h1 {
+    transition: .3s all;
+}
+
+.welcome-page h1:hover {
+    letter-spacing: 3px;
+}
+
+.welcome-page a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    background-color: rgb(69, 95, 108);
+    color: aliceblue;
+    padding: 7px;
+    border-radius: 10px;
+    box-shadow: 0 7px 12px rgba(0, 0, 0, .7);
+    transition: .3s all;
+}
+
+.welcome-page a:hover {
+    background-color: rgb(45, 62, 70);
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+
+
+/* .main-container-landingPage button {
+    background-color: red;
+} */
+
+.main-container-funfacts {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 0px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 40%;
+    font-size: 30px;
+    align-items: center;
+    /*     padding-bottom: 50px;
+ */
+    padding-right: 50px;
+    margin-bottom: 10%;
+}
+
+.data-funfact {
+    width: 100%;
+    background-color: rgba(0, 0, 0, .2);
+    backdrop-filter: blur(3px);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, .4);
+    border-radius: 25px;
+}
+
+.data-funfact h2 {
+    margin: auto;
+    border-bottom: 1px solid rgb(69, 95, 108);
+    transition: .5s all;
+}
+
+.data-funfact h2:hover {
+    color: rgb(116, 153, 185);
+    text-shadow: 0 4px 6px rgba(0, 0, 0, .4);
+}
+
+.button-landing button img {
+    width: 100%;
+}
+
+.button-landing button {
+    width: 100%;
+    background-color: rgb(69, 95, 108);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .2);
+    transition: .3s all;
+}
+
+.button-landing button:hover {
+    border: 2px solid rgb(69, 95, 108);
+}
+
+.start-app {
+    margin-top: 100px;
+}
+
+.start-app a {
+    text-decoration: none;
+}

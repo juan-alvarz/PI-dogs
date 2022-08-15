@@ -1,9 +1,11 @@
-let datos = ["hola"];
-let basedeDatos;
-
-if (basedeDatos) {
-  let infoDb = datos.concat(basedeDatos);
-} else {
-  indoDb = datos;
-}
-console.log(infoDb);
+let datos = [
+  {
+    dato: "los perros son los mejores amigos del hombre",
+  },
+  {
+    dato: "los perros comen croquetas",
+  },
+  {
+    dato: "los perros son más inteligentes que los gatos",
+  },
+];

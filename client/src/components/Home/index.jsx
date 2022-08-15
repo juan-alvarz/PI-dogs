@@ -90,8 +90,7 @@ export default function Home() {
   //function for input searchbar
   function handleInputChange(e) {
     e.preventDefault();
-    console.log(nameDoggy);
-    console.log(e.target.value);
+
     setName(e.target.value);
     setCurrentPage(1);
     e.target.value
