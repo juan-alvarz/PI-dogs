@@ -27,6 +27,11 @@ export default function Home() {
   const indexOfLastDog = currentPage * dogsPage; // 7
   const indexOfFirstDog = indexOfLastDog - dogsPage;
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
+  const totalPages = Math.ceil(allDogs.length / dogsPage);
+  for (let i = 0; i < Math.ceil(allDogs / dogsPage); i++) {
+    totalPages = i;
+  }
+
   const [order, setOrder] = useState("");
   //para la searchBar
   const [nameDoggy, setName] = useState("");
@@ -37,7 +42,7 @@ export default function Home() {
   //some functions in an object
   const utils = {
     next: (state) => {
-      if (state <= 21) {
+      if (state <= totalPages - 1) {
         setCurrentPage(state + 1);
       }
     },
@@ -108,8 +113,7 @@ export default function Home() {
           <div className="searchbar-component">
             <input
               className="searchbar-component"
-              /*             onChange={(e) => handleInputChange(e)}
-               */ type="text"
+              type="text"
               onChange={(e) => handleInputChange(e)}
               placeholder="Search a breed"
             />

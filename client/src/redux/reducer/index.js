@@ -1,6 +1,4 @@
 import {
-  filterDogsByTemperament,
-  FILTERS_BY_TEMPERAMENT,
   FILTER_BY_TEMPERAMENT,
   FILTER_CREATED,
   GET_DOG,
@@ -18,6 +16,7 @@ const initialState = {
   temperaments: [],
   dog: [],
 };
+/* =================== */
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -35,8 +34,6 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_DOG_BY_NAME:
-      /*  console.log(action.payload);
-      console.log(Array.isArray(action.payload)); */
       if (Array.isArray(action.payload)) {
         return {
           ...state,
@@ -66,9 +63,6 @@ function rootReducer(state = initialState, action) {
         action.payload === "temp"
           ? allDogs
           : dogsTemp.filter((p) => p.temperament.includes(action.payload));
-      // poke.filter(p => p.types[0] === action.payload || p.types[1] === action.payload)
-      // poke.filter(p => p.types.join(', ').includes(action.payload))
-      //
       return {
         ...state,
         dogs: statusFilter, //el state de los perros de vuelve UNICAMENTE los filtrados
@@ -119,27 +113,37 @@ function rootReducer(state = initialState, action) {
       let sortArrWeight =
         action.payload === "min"
           ? dataDogs.sort(function (a, b) {
-              if (a.weight.split(" - ")[0] > b.weight.split(" - ")[0]) {
+              if (
+                Number(a.weight.split(" - ")[0]) >
+                Number(b.weight.split(" - ")[0])
+              ) {
                 return 1;
               }
-              if (b.weight.split(" - ")[0] > a.weight.split(" - ")[0]) {
+              if (
+                Number(b.weight.split(" - ")[0]) >
+                Number(a.weight.split(" - ")[0])
+              ) {
                 return -1;
               }
               return 0;
             })
           : dataDogs.sort(function (a, b) {
-              if (a.weight.split(" - ")[1] > b.weight.split(" - ")[1])
+              if (
+                Number(a.weight.split(" - ")[1]) >
+                Number(b.weight.split(" - ")[1])
+              )
                 return -1; // '15 - 54' [15,54]
-              if (b.weight.split(" - ")[1] > a.weight.split(" - ")[1]) return 1;
+              if (
+                Number(b.weight.split(" - ")[1]) >
+                Number(a.weight.split(" - ")[1])
+              )
+                return 1;
               return 0;
             });
       return {
         ...state,
         dogs: sortArrWeight,
       };
-    /* let sortArr = 
-      action.payload === 'min'? doggysForWeight.sort() */
-
     default:
       return state;
   }
