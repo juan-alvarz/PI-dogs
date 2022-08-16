@@ -34,7 +34,6 @@ const temperamento = async (req, res) => {
       return res.status(200).json(dbContent);
     }
   } catch (error) {
-    //POR SI CUALQUIER COSA SALE MAL...
     return res.status(500).json({ msg: error.message });
   }
 };

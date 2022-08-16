@@ -6,11 +6,10 @@ import {
   createNewBreed,
   getTemperaments,
 } from "../../redux/actions";
-import DogCard from "../Card";
+//Styles
 import "./createDog.css";
-//  IMAGEN DEFAULT DE PERRO
 
-// --------------------- VALIDACIONES ---------------------------------------------
+// --------------------- VALIDATIONS ---------------------------------------------
 function validate(input) {
   const correctName = new RegExp("([A-Z]+)+$", "i");
   let errors = {};
@@ -24,8 +23,6 @@ function validate(input) {
     errors.max_weight = "max weight must be greater than min weight";
   else if (input.max_lifeSpan < input.min_lifeSpan)
     errors.max_lifeSpan = "max life span must be greater than min life span";
-  else if (input.temperaments.length === 0)
-    errors.temperament = "could have at least one temperament";
 
   return errors;
 }
@@ -36,7 +33,7 @@ export default function CreateDog() {
   const temperaments = useSelector((state) => state.temperaments);
   const [errors, setErrors] = useState({});
 
-  /* Nombre
+  /* 
 Altura (Diferenciar entre altura mínima y máxima)
 Peso (Diferenciar entre peso mínimo y máximo)
 Años de vida */
@@ -60,7 +57,10 @@ Años de vida */
     height: `${input.min_height} - ${input.max_height}`,
     weight: `${input.min_weight} - ${input.max_weight}`,
     lifeSpan: `${input.min_lifeSpan} - ${input.max_lifeSpan} years`,
-    temperament: input.temperaments ? input.temperaments.join(", ") : "",
+    temperament:
+      input.temperaments.length !== 0
+        ? input.temperaments.join(", ")
+        : "Unknown",
   };
 
   useEffect(() => {
@@ -92,12 +92,9 @@ Años de vida */
         temperaments: [...input.temperaments, e.target.value],
       });
     }
-    //console.log(input);
-    //console.log(sendToPost);
   }
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(sendToPost);
     createNewBreed(sendToPost);
     alert("breed created succesfully");
     setInput({
@@ -178,10 +175,10 @@ Años de vida */
                   <span onClick={() => handleDeleteTemp(p)}>{p + " "}</span>
                 ))}
               </div>
-              {errors.temperament ? (
-                <p className="warning">{errors.temperament}</p>
-              ) : (
+              {input.temperaments.length !== 0 ? (
                 ""
+              ) : (
+                <p className="warning">could have at least one temperament</p>
               )}
             </div>
             <div className="input-number">
@@ -248,15 +245,20 @@ Años de vida */
                 <p className="error">{errors.max_lifeSpan}</p>
               )}
             </div>
-
-            <button
+            {Object.keys(errors).length !== 0 ? (
+              <button type="submit" disabled={true}>
+                incomplete inputs
+              </button>
+            ) : (
+              <button type="submit">create breed</button>
+            )}
+            {/* <button
               type="submit"
               disabled={Object.keys(errors).length !== 0 ? true : false}
             >
               Create Breed
-            </button>
+            </button> */}
           </form>
-          {/* Liste de temperamentos seleccionadas y posibilidad de borrarlas */}
         </div>
 
         {/* ========================>>PREVIOUS<<=================== */}

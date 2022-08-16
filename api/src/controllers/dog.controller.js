@@ -1,9 +1,5 @@
 const { Dog } = require("../db.js");
 const axios = require("axios");
-const { Op, Sequelize, ValidationErrorItemType } = require("sequelize");
-const router = require("../routes");
-const db = require("../db.js");
-const e = require("express");
 const { MY_APPI_KEY } = process.env;
 require("dotenv").config();
 
@@ -24,7 +20,7 @@ const getInfo = async () => {
     };
   });
 };
-//lama la API y crea una variable global
+//lama la API y crea una variable global para agilizar el proceso
 getInfo();
 
 const apiDog = async (req, res) => {
@@ -50,19 +46,17 @@ const createNewDog = async (req, res) => {
       image,
       temperament,
     });
-    let dbDog = await Dog.findAll(); // {} => longitud === 0
-    let dbDogLength = Object.keys(dbDog).length;
+    let dbDog = await Dog.findAll();
+    let dbDogLength = Object.keys(dbDog).length; // {} => longitud === 0
     if (dbDogLength !== 0) {
-      let hash = {};
+      let hash = {}; //evitar que se clonen perros
       dbContenido = dbContenido.concat(dbDog);
-      console.log(dbContenido);
       dbContenido = dbContenido.filter((p) =>
         hash[p.id] ? false : (hash[p.id] = true)
       );
     }
     return res.status(200).send("perro creado con exito");
   } catch (error) {
-    console.log(error.message);
     return res.status(500).json({ message: error.message });
   }
 };

@@ -1,6 +1,4 @@
-const axios = require("axios");
 const { Router } = require("express");
-const { MY_APPI_KEY } = process.env;
 const {
   apiDog,
   apiNames,

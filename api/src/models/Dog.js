@@ -44,6 +44,6 @@ module.exports = (sequelize) => {
         defaultValue: "DB",
       },
     },
-    { timestamps: true, createdAt: "creado", updatedAt: false }
+    { timestamps: false }
   );
 };

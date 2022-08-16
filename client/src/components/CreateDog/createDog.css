@@ -76,6 +76,7 @@
 }
 
 .main-form button {
+    font-family: inherit;
     color: aliceblue;
     margin: 10px;
     border: none;
@@ -115,8 +116,9 @@
 }
 
 .main-form button:disabled {
+    font-family: inherit;
     cursor: not-allowed;
-    color: gainsboro;
+    color: rgb(191, 189, 189);
     background-color: whitesmoke;
 }
 
