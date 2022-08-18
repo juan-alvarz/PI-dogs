@@ -1,4 +1,3 @@
-import { createDispatchHook } from "react-redux";
 import axios from "axios";
 
 export const GET_DOGS = "GET_DOGS";
@@ -43,7 +42,6 @@ export function filterDogsByTemperament(payload) {
 }
 
 export function filterCreated(payload) {
-  console.log(payload);
   return {
     type: FILTER_CREATED,
     payload,

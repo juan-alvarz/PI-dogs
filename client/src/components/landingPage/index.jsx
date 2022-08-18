@@ -37,6 +37,17 @@ const LandingPage = () => {
         <div className="data-funfact">
           <h2>Fun Facts about doggys</h2>
           <p>{datos[data]}</p>
+          <footer className="source-data-landing">
+            <span>
+              source:{" "}
+              <a
+                href="https://www.akc.org/expert-advice/lifestyle/dog-facts/"
+                target="_blank"
+              >
+                American Kennel Club
+              </a>
+            </span>
+          </footer>
         </div>
         <div className="button-landing">
           <button onClick={handleNext}>

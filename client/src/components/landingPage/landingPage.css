@@ -92,7 +92,8 @@
 }
 
 .data-funfact h2 {
-    margin: aut;
+    width: 95%;
+    margin: auto;
     border-bottom: 1px solid rgb(69, 95, 108);
     transition: .5s all;
 }
@@ -125,4 +126,28 @@
 
 .start-app a {
     text-decoration: none;
+}
+
+.source-data-landing {
+    display: flex;
+    justify-content: center;
+    color: black;
+}
+
+.source-data-landing span {
+    font-size: 20px;
+    border-bottom: 6px solid gray;
+    color: gray;
+}
+
+
+.source-data-landing a {
+    text-decoration: none;
+    color: rgb(66, 66, 66);
+    transition: .3s all;
+}
+
+.source-data-landing a:hover {
+    color: aliceblue;
+    letter-spacing: .5px;
 }

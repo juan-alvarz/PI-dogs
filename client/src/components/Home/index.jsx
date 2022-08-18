@@ -177,7 +177,7 @@ export default function Home() {
         <div className="paginated-next-prev">
           <div className="next-prev">
             <button onClick={() => utils.prev(currentPage, setCurrentPage)}>
-              <img src={prev_image} alt />
+              <img src={prev_image} alt="" />
             </button>
             <span>{currentPage}</span>
             <button onClick={() => utils.next(currentPage)}>
@@ -200,9 +200,8 @@ export default function Home() {
         <div className="container-dogs-cards">
           {currentDogs?.map((p) => {
             return (
-              <div className="single-home-card">
+              <div className="single-home-card" key={p.id}>
                 <DogCard
-                  key={p.id}
                   id={p.id}
                   name={p.name}
                   image={p.image}
