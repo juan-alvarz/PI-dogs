@@ -127,7 +127,7 @@ export default function Home() {
             <span className="filters-title">FILTERS:</span>
             <select onChange={(e) => handleFilterTemperament(e)}>
               <optgroup label="TEMPERAMENTS">
-                <option value="temp">All</option>
+                <option value="temp">All temperaments</option>
 
                 {allTemperaments?.map((t) => {
                   return (
@@ -147,14 +147,14 @@ export default function Home() {
             </select>
             <select onChange={(e) => utils.handleSortWeight(e)}>
               <optgroup label="WEIGHT">
-                <option value="all">All</option>
+                <option value="all">All weight</option>
                 <option value="min">min weight</option>
                 <option value="max">max weight</option>
               </optgroup>
             </select>
             <select onChange={(e) => handleFilterCreated(e)}>
               <optgroup label="API - DB">
-                <option value="All">All</option>
+                <option value="All">All dogs</option>
                 <option value="existent">existents</option>
                 <option value="created">created</option>
               </optgroup>

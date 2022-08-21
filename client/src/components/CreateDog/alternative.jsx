@@ -17,11 +17,11 @@ function validate(input) {
     errors.name = "name is required";
   } else if (!correctName.test(input.name)) {
     errors.name = "only text is supported";
-  } else if (Number(input.max_height) < Number(input.min_height))
+  } else if (input.max_height < input.min_height)
     errors.max_height = "max height must be greater than min height";
-  else if (Number(input.max_weight) < Number(input.min_weight))
+  else if (input.max_weight < input.min_weight)
     errors.max_weight = "max weight must be greater than min weight";
-  else if (Number(input.max_lifeSpan) < Number(input.min_lifeSpan))
+  else if (input.max_lifeSpan < input.min_lifeSpan)
     errors.max_lifeSpan = "max life span must be greater than min life span";
 
   return errors;
@@ -84,14 +84,15 @@ Años de vida */
         temperaments: [...input.temperaments, e.target.value],
       });
     }
-    console.log(errors);
   }
   function handleTemperament(e) {
     if (e.target.value !== "temp") {
-      setInput({
-        ...input,
-        temperaments: [...input.temperaments, e.target.value],
-      });
+      if (!input.temperaments.includes(e.target.value)) {
+        setInput({
+          ...input,
+          temperaments: [...input.temperaments, e.target.value],
+        });
+      }
     }
   }
   function handleSubmit(e) {
@@ -106,7 +107,7 @@ Años de vida */
       min_weight: "1",
       max_weight: "1",
       min_lifeSpan: "1",
-      max_lifeSpan: "1",
+      max_lifeSpan: 1,
       temperaments: [],
     });
     history.push("/home");
@@ -130,7 +131,6 @@ Años de vida */
       <div className="createdog-form-previous">
         <div className="create-form">
           <h2>Create a new breed</h2>
-
           <form onSubmit={handleSubmit} className="main-form">
             <div className={errors.name ? "error-input" : ""}>
               <label>Name:</label>
@@ -142,9 +142,7 @@ Años de vida */
                 autoComplete="off"
                 onChange={handleChange}
               />
-              {/* <div className="error-input-name">
-                {errors.name && <p className="error">{errors.name}</p>}
-              </div> */}
+              {errors.name && <p className="error">{errors.name}</p>}
             </div>
             <div>
               <label>Image:</label>
@@ -169,9 +167,11 @@ Años de vida */
               <select onChange={(e) => handleTemperament(e)} name="temperament">
                 <optgroup label="Temperaments">
                   <option value="temp">Choose one or more</option>
-                  {temperaments?.map((t) => {
+                  {temperaments?.map((t, index) => {
                     return (
-                      <option /* key={index} */ value={t.name}>{t.name}</option>
+                      <option key={index} value={t.name}>
+                        {t.name}
+                      </option>
                     );
                   })}
                 </optgroup>
@@ -199,14 +199,15 @@ Años de vida */
               <label>Max Height: </label>
               <input
                 type="number"
-                min={Number(input.min_height) + 1}
+                min={(Number(input.min_height) + 1).toString()}
                 value={input.max_height}
                 name="max_height"
                 onChange={handleChange}
               />
+              {errors.max_height && (
+                <p className="error">{errors.max_height}</p>
+              )}
             </div>
-            <div className="error">{input}</div>
-            {errors.max_height && <p className="error">{errors.max_height}</p>}
             <div className="input-number">
               <label>Min Weight:</label>
               <input
@@ -252,11 +253,17 @@ Años de vida */
             </div>
             {Object.keys(errors).length !== 0 ? (
               <button type="submit" disabled={true}>
-                wrong inputs
+                incomplete inputs
               </button>
             ) : (
               <button type="submit">create breed</button>
             )}
+            {/* <button
+              type="submit"
+              disabled={Object.keys(errors).length !== 0 ? true : false}
+            >
+              Create Breed
+            </button> */}
           </form>
         </div>
 
